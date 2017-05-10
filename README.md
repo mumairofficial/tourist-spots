@@ -11,6 +11,10 @@ Install the latest Ionic CLI:
 $ npm install -g ionic
 ```
 
+```bash
+$ ionic add platform android
+```
+
 Then run:
 
 ```bash
