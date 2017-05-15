@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, LoadingController } from 'ionic-angular';
+import { AlertController, NavController, LoadingController } from 'ionic-angular';
 
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 import { AngularFireOfflineDatabase, AfoListObservable, AfoObjectObservable } from 'angularfire2-offline/database';
@@ -23,7 +23,8 @@ export class HomePage {
   public userEmail: string;
 
   constructor(public navCtrl: NavController, private loadingCtrl: LoadingController, 
-    private fireDb: AngularFireDatabase, private afoDb: AngularFireOfflineDatabase, private _auth: AuthProvider) {
+    private fireDb: AngularFireDatabase, private afoDb: AngularFireOfflineDatabase, 
+    private _auth: AuthProvider, private alertCtrl: AlertController) {
     // this.places = fireDb.list('/places');
     this.places = afoDb.list('/places');
     this.userEmail = _auth.displayName();
@@ -44,4 +45,46 @@ export class HomePage {
   logout() {
     this._auth.logout()
   }
+
+  addPlace() {
+    let prompt = this.alertCtrl.create({
+      title: 'Add Place',
+      message: "Enter a name and Coordinates",
+      inputs: [
+        {
+          name: 'name',
+          placeholder: 'Lahore',
+          type: 'string'
+        },
+        {
+          name: 'lat',
+          placeholder: '30.12121',
+          type: 'number'
+        },
+        {
+          name: 'lon',
+          placeholder: '71.23435354',
+          type: 'number'
+        },
+
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          handler: data => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Save',
+          handler: data => {
+            console.log(data);
+            this.places.push(data);
+          }
+        }
+      ]
+    });
+    prompt.present();
+  }
+
 }
