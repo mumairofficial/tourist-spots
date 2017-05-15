@@ -12,18 +12,18 @@ import { TabsPage } from '../pages/tabs/tabs';
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage:any;
+  rootPage:any = TabsPage;
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private _auth: AuthProvider) {
     platform.ready().then(() => {
       statusBar.styleDefault();
       splashScreen.hide();
 
-      if (_auth.authenticated()) {
-        this.rootPage = TabsPage;
-      } else {
-        this.rootPage = LoginPage;
-      }
+      // if (_auth.authenticated()) {
+      //   this.rootPage = TabsPage;
+      // } else {
+      //   this.rootPage = LoginPage;
+      // }
 
     });
   }

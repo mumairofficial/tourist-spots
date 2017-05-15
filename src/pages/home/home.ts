@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { NavController, LoadingController } from 'ionic-angular';
 
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
+import { AngularFireOfflineDatabase, AfoListObservable, AfoObjectObservable } from 'angularfire2-offline/database';
+
 import { AuthProvider } from '../../providers/auth-provider';
 
 import { PlaceDetail } from '../place-detail/place-detail';
@@ -15,12 +17,15 @@ import { Place } from '../../model/place';
 export class HomePage {
 
   private loader: any;
-  public places: FirebaseListObservable<Place[]>;
+  // public places: FirebaseListObservable<Place[]>;
+  public places: AfoListObservable<Place[]>;
 
   public userEmail: string;
 
-  constructor(public navCtrl: NavController, private loadingCtrl: LoadingController, private fireDb: AngularFireDatabase, private _auth: AuthProvider) {
-    this.places = fireDb.list('/places');
+  constructor(public navCtrl: NavController, private loadingCtrl: LoadingController, 
+    private fireDb: AngularFireDatabase, private afoDb: AngularFireOfflineDatabase, private _auth: AuthProvider) {
+    // this.places = fireDb.list('/places');
+    this.places = afoDb.list('/places');
     this.userEmail = _auth.displayName();
   }
 
