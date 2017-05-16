@@ -4,7 +4,7 @@ import { AlertController, NavController, LoadingController } from 'ionic-angular
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 import { AngularFireOfflineDatabase, AfoListObservable, AfoObjectObservable } from 'angularfire2-offline/database';
 
-import { AuthProvider } from '../../providers/auth-provider';
+import { AuthProvider } from '../../providers/auth/auth';
 
 import { PlaceDetail } from '../place-detail/place-detail';
 
@@ -20,14 +20,11 @@ export class HomePage {
   // public places: FirebaseListObservable<Place[]>;
   public places: AfoListObservable<Place[]>;
 
-  public userEmail: string;
-
   constructor(public navCtrl: NavController, private loadingCtrl: LoadingController, 
     private fireDb: AngularFireDatabase, private afoDb: AngularFireOfflineDatabase, 
     private _auth: AuthProvider, private alertCtrl: AlertController) {
     // this.places = fireDb.list('/places');
     this.places = afoDb.list('/places');
-    this.userEmail = _auth.displayName();
   }
 
   navigateToPlaceDetail(place: Place): void {
@@ -40,10 +37,6 @@ export class HomePage {
   	});
 
   	this.loader.present();
-  }
-
-  logout() {
-    this._auth.logout()
   }
 
   addPlace() {

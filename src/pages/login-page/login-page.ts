@@ -3,7 +3,7 @@ import { NavController, NavParams } from 'ionic-angular';
 
 import { TabsPage } from '../tabs/tabs';
 
-import { AuthProvider } from '../../providers/auth-provider';
+import { AuthProvider } from '../../providers/auth/auth';
 
 @Component({
   selector: 'page-login-page',
@@ -16,7 +16,7 @@ export class LoginPage {
 
   user: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private auth: AuthProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private _auth: AuthProvider) {
   }
 
   ionViewDidLoad() {
@@ -24,13 +24,13 @@ export class LoginPage {
   }
 
   login(formValue): void {
-    this.auth.login(formValue)
-      .then(data => {
-        this.navCtrl.push(TabsPage);
-      })
-      .catch(error => {
-        console.log(error);
-      });
+    this._auth.login();
+      // .then(data => {
+      //   this.navCtrl.push(TabsPage);
+      // })
+      // .catch(error => {
+      //   console.log(error);
+      // });
   }
 
 

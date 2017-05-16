@@ -6,7 +6,6 @@
 </ion-header>
 
 <ion-content>
-  <button ion-item color="light" (click)="logout()">{{userEmail}} | Logout</button>
   <ion-list>
     <pre *ngIf="!(places | async)">loading objectives...</pre>
     <button ion-item *ngFor="let place of places | async" (click)="navigateToPlaceDetail(place)">
