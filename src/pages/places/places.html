@@ -1,0 +1,46 @@
+<ion-header no-border>
+  <ion-toolbar>
+    <ion-title>All Places</ion-title>
+
+    <ion-buttons end>
+      <button ion-button (tap)="openModalToCreateNewPlace()">
+        Add New
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles" refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <ion-list>
+    <pre *ngIf="!(places | async)">loading objectives...</pre>
+    <ion-item-sliding *ngFor="let place of places | async">
+      <ion-item>
+        <text-avatar text="{{place.name}}" item-left>
+        </text-avatar>
+        <h2>{{place.name}}</h2>
+        <small><ion-note>Lorem ispum</ion-note></small>
+      </ion-item>
+
+      <ion-item-options side="right">
+        <button ion-button color="primary">
+          <ion-icon name="md-create" style="font-size: 2.4rem"></ion-icon>
+          Update
+        </button>
+      </ion-item-options>
+
+      <ion-item-options side="left">
+        <button ion-button color="danger">
+          <ion-icon name="md-trash" style="font-size: 2.4rem"></ion-icon>
+          Delete
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+
+</ion-content>
