@@ -1,0 +1,17 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Profile</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <button ion-item (click)="logout()" *ngIf="isLoggedIn; else showLoginButton">Logout</button>
+  <template #showLoginButton>
+  <button ion-item (click)="login()">Login</button>
+  </template>
+
+</ion-content>
