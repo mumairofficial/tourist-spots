@@ -1,0 +1,69 @@
+<ion-header no-border>
+
+  <ion-toolbar>
+    <ion-buttons left>
+      <button ion-button icon-only (tap)="dismiss()">
+        <ion-icon name="md-close"></ion-icon>
+      </button>
+    </ion-buttons>
+
+    <ion-title>Place info</ion-title>
+
+    <ion-buttons end>
+      <button ion-button (tap)="saveNewPlace()">
+        Save
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+
+</ion-header>
+
+<ion-content padding>
+
+  <form #form="ngForm" (ngSubmit)="login(form.value)">
+
+    <!--<ion-list>-->
+
+      <ion-title>
+          <ion-note>Location Coordinates</ion-note>
+        </ion-title>
+
+      <ion-grid>
+        <ion-row>
+          <ion-item>
+            <ion-label floating>Name</ion-label>
+            <ion-input type="text" name="placeName" required></ion-input>
+          </ion-item>
+        </ion-row>
+
+        <ion-row>
+          <ion-col width-66>
+            <ion-item>
+              <ion-label floating>District</ion-label>
+              <ion-input type="text" name="district" required></ion-input>
+            </ion-item>
+          </ion-col>
+
+          <ion-col>
+            <ion-item>
+              <ion-label floating>Country</ion-label>
+              <ion-input type="text" name="country" value="Pakistan" required></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+
+        <ion-title>
+          <ion-note>Location Coordinates</ion-note>
+        </ion-title>
+
+      </ion-grid>
+
+    <!--</ion-list>-->
+
+    <div padding>
+      <button ion-button color="primary" type="submit" block [disabled]="!form.form.valid">Sign In</button>
+    </div>
+
+  </form>
+
+</ion-content>
