@@ -15,12 +15,20 @@ import { AboutPage } from '../pages/about/about';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
 import { PlaceDetail } from '../pages/place-detail/place-detail';
-import { LoginPage } from '../pages/login-page/login-page';
 
-import { AuthProvider } from '../providers/auth-provider';
+import { DashboardPage } from '../pages/dashboard/dashboard';
+import { PlacesPage } from '../pages/places/places';
+import { PlaceFormModalPage } from '../pages/place-form-modal/place-form-modal';
+import { ProfilePage } from '../pages/profile/profile';
+
+
+// import { AuthProvider } from '../providers/auth-provider';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { PlacesProvider } from '../providers/places/places';
+import { AuthProvider } from '../providers/auth/auth';
+import { TextAvatarDirective } from '../components/text-avatar/text-avatar';
 
 @NgModule({
   declarations: [
@@ -29,7 +37,11 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     HomePage,
     TabsPage,
     PlaceDetail,
-    LoginPage
+    DashboardPage,
+    PlacesPage,
+    ProfilePage,
+    TextAvatarDirective,
+    PlaceFormModalPage
   ],
   imports: [
     BrowserModule,
@@ -47,12 +59,16 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     HomePage,
     TabsPage,
     PlaceDetail,
-    LoginPage
+    DashboardPage,
+    PlacesPage,
+    ProfilePage,
+    PlaceFormModalPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
+    PlacesProvider,
     AuthProvider
   ]
 })
