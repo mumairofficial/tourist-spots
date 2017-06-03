@@ -26,6 +26,24 @@ export class AuthProvider {
         return firebase.auth().currentUser;
     }
 
+    isAdmin(): Observable<boolean> {
+        return this.afDb.list('/admins')
+            .map(data => {
+                let isAdmin: boolean = false;
+                if (data !== null && this.userInfo() !== null) {
+                    data.forEach(admin => {
+                        if (isAdmin = admin.uid === this.userInfo().uid) {
+                            return isAdmin = true;
+                        }
+                    });
+                }
+                
+                return isAdmin;
+            })
+            .first();
+
+    }
+
     signup(userInfo: RegisterForm): any {
         firebase.auth().currentUser
         return this.afAuth.auth.createUserWithEmailAndPassword(userInfo.email, userInfo.password);
@@ -36,6 +54,6 @@ export class AuthProvider {
     }
 
     isLoggedIn(): boolean {
-        return firebase.auth().currentUser !== null;
+        return this.userInfo() !== null;
     }
 }
