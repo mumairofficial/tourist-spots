@@ -8,5 +8,10 @@
 
 
 <ion-content padding>
-{{place | json}}
+  <sebm-google-map [latitude]="toNumber(place?.latitude)" [longitude]="toNumber(place?.longitude)" [zoom]="16">
+    <sebm-google-map-marker [latitude]="toNumber(place?.latitude)" [longitude]="toNumber(place?.longitude)" [label]="place.placeName">
+    </sebm-google-map-marker>
+  </sebm-google-map>
+
+  <img src="{{place.photoUrl}}" />
 </ion-content>
