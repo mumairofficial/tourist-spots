@@ -12,12 +12,7 @@
 
 <ion-content>
 
-  <ion-refresher (ionRefresh)="doRefresh($event)">
-    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles" refreshingText="Refreshing...">
-    </ion-refresher-content>
-  </ion-refresher>
-
-  <ion-list-header class="filter-header">
+  <ion-list-header *ngIf="!isAdmin" class="filter-header">
     <ion-select item-left>
       <ion-option value="near" selected="true">Near to me</ion-option>
       <ion-option value="less_price">Low Price</ion-option>
@@ -31,24 +26,24 @@
 
   <ion-list no-lines>
     <pre *ngIf="!(places | async)">loading objectives...</pre>
-    <ion-item-sliding *ngFor="let place of places | async">
+    <ion-item-sliding *ngFor="let place of places | async" (click)="switchToPlaceDetailPage(place)">
       <button ion-item class="item item-icon-left item-icon-right">
-        <text-avatar text="{{place.name}}" item-left>
+        <text-avatar text="{{place.placeName}}" item-left>
         </text-avatar>
-        <h2>{{place.name}}</h2>
+        <h2>{{place.placeName}}</h2>
         <p>
-          <small>Lorem ispum</small>
+          <small>{{place.latitude}} {{place.longitude}}</small>
         </p>
       </button>
 
-      <ion-item-options side="right">
+      <ion-item-options *ngIf="isAdmin" side="right">
         <button ion-button color="primary">
           <ion-icon name="md-create" style="font-size: 2.4rem"></ion-icon>
           Update
         </button>
       </ion-item-options>
 
-      <ion-item-options side="left">
+      <ion-item-options *ngIf="isAdmin" side="left">
         <button ion-button color="danger">
           <ion-icon name="md-trash" style="font-size: 2.4rem"></ion-icon>
           Delete
@@ -57,7 +52,7 @@
     </ion-item-sliding>
   </ion-list>
 
-  <ion-fab right bottom>
+  <ion-fab *ngIf="isAdmin" right bottom>
     <button ion-fab mini color="primary" (tap)="openModalToCreateNewPlace()">
       <ion-icon name="add"></ion-icon>
     </button>
