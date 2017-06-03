@@ -1,24 +1,58 @@
 import { Component } from '@angular/core';
-import { ViewController } from 'ionic-angular';
+import { ToastController, ViewController } from 'ionic-angular';
+
+import { AngularFireOfflineDatabase } from 'angularfire2-offline/database';
+import { Place } from "../../model/place";
+import { PlacesProvider } from "../../providers/places/places";
+import { FormBuilder, Validators } from "@angular/forms";
 
 @Component({
-  selector: 'page-place-form-modal',
-  templateUrl: 'place-form-modal.html',
+    selector: 'page-place-form-modal',
+    templateUrl: 'place-form-modal.html',
 })
 export class PlaceFormModalPage {
 
-  constructor(private viewCtrl: ViewController) {
-  }
+    public place: Place;
+    public placeInputForm: any;
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad PlaceFormModalPage');
-  }
+    constructor(private viewCtrl: ViewController, private _placeProvider: PlacesProvider,
+        private afoDb: AngularFireOfflineDatabase, private toastCtrl: ToastController, private formBuilder: FormBuilder) {
+        this.place = new Place("", 0, 0, "", "", "");
 
-  dismiss() {
-    this.viewCtrl.dismiss();
-  }
+        this.initiateFormBuilder();
+    }
 
-  saveNewPlace() {
-    console.log('save new place was clicked!');
-  }
+    private initiateFormBuilder() {
+        this.placeInputForm = this.formBuilder.group({
+            placeName: ['', Validators.compose([Validators.maxLength(30), Validators.required])],
+            district: ['', Validators.compose([Validators.maxLength(30), Validators.required])],
+            country: ['', Validators.compose([Validators.maxLength(30), Validators.required])],
+            latitude: ['', Validators.compose([Validators.maxLength(30), Validators.required])],
+            longitude: ['', Validators.compose([Validators.maxLength(30), Validators.required])],
+            description: ['', Validators.compose([Validators.maxLength(30), Validators.required])],
+            photoUrl: ['', Validators.compose([Validators.required])]
+        });
+    }
+
+    ionViewDidLoad() {
+        console.log('ionViewDidLoad PlaceFormModalPage');
+    }
+
+    dismiss() {
+        this.viewCtrl.dismiss();
+    }
+
+    saveNewPlace(values) {
+        this._placeProvider.add(values);
+        this.presentToast("Place was saved successfully");
+        this.placeInputForm.reset();
+    }
+
+    presentToast(message: string) {
+        this.toastCtrl.create({
+            message: message,
+            duration: 2000
+        }).present();
+    }
+
 }
