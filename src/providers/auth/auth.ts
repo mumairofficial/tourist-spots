@@ -1,30 +1,41 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 
-import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
-import 'rxjs/add/operator/map';
+import { LoginForm } from "../../model/forms/login-form";
+import { AngularFireAuth } from "angularfire2/auth";
+import { AngularFireDatabase } from "angularfire2/database";
+import { Observable } from "rxjs/Observable";
+import { RegisterForm } from "../../model/forms/register-form";
+import firebase from "firebase";
 
 @Injectable()
 export class AuthProvider {
 
-  private isLoggedIn: boolean;
-  private authWatchDog = new Subject();
+    user: any;
 
-  constructor(public http: Http) {
-    this.isLoggedIn = false;
-  }
+    constructor(private http: Http, private afAuth: AngularFireAuth,
+        private afDb: AngularFireDatabase) {
 
-  public login(): void {
-    this.authWatchDog.next(true);
-  }
+    }
 
-  public logout(): void {
-    this.authWatchDog.next(false);
-  }
+    login(credentials: LoginForm): any {
+        return this.afAuth.auth.signInWithEmailAndPassword(credentials.email, credentials.password)
+    }
 
-  public watchIsLoggedIn(): Subject<boolean> {
-    return this.authWatchDog;
-  }
+    userInfo() {
+        return firebase.auth().currentUser;
+    }
 
+    signup(userInfo: RegisterForm): any {
+        firebase.auth().currentUser
+        return this.afAuth.auth.createUserWithEmailAndPassword(userInfo.email, userInfo.password);
+    }
+
+    logout() {
+        this.afAuth.auth.signOut();
+    }
+
+    isLoggedIn(): boolean {
+        return firebase.auth().currentUser !== null;
+    }
 }

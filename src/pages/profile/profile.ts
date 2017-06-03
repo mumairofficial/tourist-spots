@@ -1,38 +1,61 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, AlertController } from 'ionic-angular';
 
 import { AuthProvider } from '../../providers/auth/auth';
+import { LoginPage } from "../login-page/login-page";
+import { RegisterForm } from "../../model/forms/register-form";
 
 @Component({
-  selector: 'page-profile',
-  templateUrl: 'profile.html',
+    selector: 'page-profile',
+    templateUrl: 'profile.html',
 })
 export class ProfilePage {
 
-  public isLoggedIn: boolean;
+    public isLoggedIn: boolean;
+    public userInfo: RegisterForm;
+    public user: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private _auth: AuthProvider) {
-    this.isLoggedIn = false;
-  }
+    constructor(public navCtrl: NavController, public navParams: NavParams, private _auth: AuthProvider,
+    private alertCtrl: AlertController) {
+        this.isLoggedIn = false;
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad ProfilePage');
-    this.watchUserLoggedInState();
-  }
+    }
 
-  logout() {
-    this._auth.logout()
-  }
+    ionViewDidLoad() {
+        this.user = this._auth.userInfo();
+        this.isLoggedIn = this._auth.isLoggedIn();
+        console.log(JSON.stringify(this.user))
+    }
 
-  login() {
-    this._auth.login();
-  }
+    ionViewCanEnter() {
+        if (!this._auth.isLoggedIn()) {
+            this.alertCtrl.create({
+                subTitle: "Session Expired",
+                message: "Login again to access the application",
+                buttons: [
+                    {
+                        text: 'Login',
+                        handler: () => {
+                            this.navCtrl.setRoot(LoginPage);
+                        }
+                    }
+                ],
+                enableBackdropDismiss: false 
+            })
+        }
+    }
 
-  private watchUserLoggedInState(): void {
-    this._auth.watchIsLoggedIn().subscribe(authStatus => {
-      console.log("subscribe to watch dog profile: ", authStatus);
-      this.isLoggedIn = authStatus;
-    })
-  }
+    // updateProfile() {
+    //     this._auth.updateProfile()
+    // }
+    
+    logout() {
+        this._auth.logout();
+        this.navCtrl.setRoot(LoginPage);
+    }
+
+    login() {
+        this.navCtrl.setRoot(LoginPage);
+    }
 
 }

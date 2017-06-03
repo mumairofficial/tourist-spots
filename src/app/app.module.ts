@@ -11,12 +11,9 @@ import { FIREBASE_CONFIG } from '../config/firebase-config';
 
 import { MyApp } from './app.component';
 
-import { AboutPage } from '../pages/about/about';
-import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
 import { PlaceDetail } from '../pages/place-detail/place-detail';
 
-import { DashboardPage } from '../pages/dashboard/dashboard';
 import { PlacesPage } from '../pages/places/places';
 import { PlaceFormModalPage } from '../pages/place-form-modal/place-form-modal';
 import { ProfilePage } from '../pages/profile/profile';
@@ -29,19 +26,21 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { PlacesProvider } from '../providers/places/places';
 import { AuthProvider } from '../providers/auth/auth';
 import { TextAvatarDirective } from '../components/text-avatar/text-avatar';
+import { LoginPage } from "../pages/login-page/login-page";
+import { RegisterPage } from "../pages/register/register";
+
 
 @NgModule({
   declarations: [
     MyApp,
-    AboutPage,
-    HomePage,
     TabsPage,
     PlaceDetail,
-    DashboardPage,
     PlacesPage,
     ProfilePage,
     TextAvatarDirective,
-    PlaceFormModalPage
+    PlaceFormModalPage,
+    LoginPage,
+    RegisterPage
   ],
   imports: [
     BrowserModule,
@@ -55,14 +54,13 @@ import { TextAvatarDirective } from '../components/text-avatar/text-avatar';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    AboutPage,
-    HomePage,
     TabsPage,
     PlaceDetail,
-    DashboardPage,
     PlacesPage,
     ProfilePage,
-    PlaceFormModalPage
+    PlaceFormModalPage,
+    LoginPage,
+    RegisterPage
   ],
   providers: [
     StatusBar,
