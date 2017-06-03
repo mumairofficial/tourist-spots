@@ -6,12 +6,13 @@
 
 </ion-header>
 
-
 <ion-content padding>
+
+  {{user?.email}}
 
   <button ion-item (click)="logout()" *ngIf="isLoggedIn; else showLoginButton">Logout</button>
   <template #showLoginButton>
-  <button ion-item (click)="login()">Login</button>
+    <button ion-item (click)="login()">Login</button>
   </template>
 
 </ion-content>
