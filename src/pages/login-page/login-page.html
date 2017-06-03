@@ -9,26 +9,30 @@
 
 <ion-content>
 
-    <form #form="ngForm" (ngSubmit)="login(form.value)">
-        
-        <ion-list>
+  <form #form="ngForm" (ngSubmit)="login(form.value)">
 
-          <ion-item>
-            <ion-label floating>Email</ion-label>
-            <ion-input type="email" name="userName" [(ngModel)]="userName" required></ion-input>
-          </ion-item>
+    <ion-list>
 
-          <ion-item>
-            <ion-label floating>Password</ion-label>
-            <ion-input type="password" name="password" [(ngModel)]="password" autocomplete="off" required></ion-input>
-          </ion-item>
+      <ion-item>
+        <ion-label floating>Email</ion-label>
+        <ion-input type="email" name="email" [(ngModel)]="loginForm.email" required></ion-input>
+      </ion-item>
 
-        </ion-list>
+      <ion-item>
+        <ion-label floating>Password</ion-label>
+        <ion-input type="password" name="password" [(ngModel)]="loginForm.password" autocomplete="off" required></ion-input>
+      </ion-item>
 
-        <div padding>
-          <button ion-button color="primary" type="submit" block [disabled]="!form.form.valid">Sign In</button>
-        </div>
+    </ion-list>
 
-    </form>
+    <div padding>
+      <button ion-button color="primary" type="submit" block [disabled]="!form.form.valid">Sign In</button>
+    </div>
+
+  </form>
+
+  <div padding>
+    <button ion-button color="primary" block (click)="switchToRegisterPage()">Register</button>
+  </div>
 
 </ion-content>
