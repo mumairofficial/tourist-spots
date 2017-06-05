@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, AlertController } from 'ionic-angular';
+import { NavController, NavParams, AlertController, App } from 'ionic-angular';
 
 import { AuthProvider } from '../../providers/auth/auth';
 import { LoginPage } from "../login-page/login-page";
@@ -15,34 +15,17 @@ export class ProfilePage {
     public userInfo: RegisterForm;
     public user: any;
 
-    constructor(public navCtrl: NavController, public navParams: NavParams, private _auth: AuthProvider,
+    constructor(private app: App, public navCtrl: NavController, public navParams: NavParams, private _auth: AuthProvider,
     private alertCtrl: AlertController) {
         this.isLoggedIn = false;
 
     }
 
-    ionViewDidLoad() {
+    ionViewDidEnter() {
         this.user = this._auth.userInfo();
         this.isLoggedIn = this._auth.isLoggedIn();
         console.log(JSON.stringify(this.user))
-    }
-
-    ionViewCanEnter() {
-        if (!this._auth.isLoggedIn()) {
-            this.alertCtrl.create({
-                subTitle: "Session Expired",
-                message: "Login again to access the application",
-                buttons: [
-                    {
-                        text: 'Login',
-                        handler: () => {
-                            this.navCtrl.setRoot(LoginPage);
-                        }
-                    }
-                ],
-                enableBackdropDismiss: false 
-            })
-        }
+        console.log('didEnterHook')
     }
 
     // updateProfile() {
@@ -51,7 +34,7 @@ export class ProfilePage {
     
     logout() {
         this._auth.logout();
-        this.navCtrl.setRoot(LoginPage);
+        this.app.getRootNav().setRoot(LoginPage);
     }
 
     login() {

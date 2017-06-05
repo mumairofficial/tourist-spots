@@ -7,7 +7,7 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireOfflineModule } from 'angularfire2-offline';
-import { FIREBASE_CONFIG } from '../config/firebase-config';
+import { FIREBASE_CONFIG, GOOGLE_MAP_API_KEY } from '../config/firebase-config';
 
 import { MyApp } from './app.component';
 
@@ -25,10 +25,12 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { PlacesProvider } from '../providers/places/places';
 import { AuthProvider } from '../providers/auth/auth';
+import { FlickrService } from '../providers/places/flickr-service';
 import { TextAvatarDirective } from '../components/text-avatar/text-avatar';
 import { LoginPage } from "../pages/login-page/login-page";
 import { RegisterPage } from "../pages/register/register";
 
+import { AgmCoreModule } from 'angular2-google-maps/core';
 
 @NgModule({
   declarations: [
@@ -49,7 +51,10 @@ import { RegisterPage } from "../pages/register/register";
     AngularFireModule.initializeApp(FIREBASE_CONFIG),
     AngularFireAuthModule,
     AngularFireDatabaseModule,
-    AngularFireOfflineModule
+    AngularFireOfflineModule,
+    AgmCoreModule.forRoot({
+      apiKey: GOOGLE_MAP_API_KEY
+    })
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -67,7 +72,8 @@ import { RegisterPage } from "../pages/register/register";
     SplashScreen,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     PlacesProvider,
-    AuthProvider
+    AuthProvider,
+    FlickrService
   ]
 })
 export class AppModule { }

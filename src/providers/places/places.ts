@@ -12,14 +12,16 @@ export class PlacesProvider {
 
   private placesList: AfoListObservable<Place[]>;
 
-  constructor(public http: Http, private afoDb: AngularFireOfflineDatabase) {}
+  constructor(public http: Http, private afoDb: AngularFireOfflineDatabase) {
+    this.placesList = this.places();
+  }
 
   public places(): AfoListObservable<Place[]> {
     return this.afoDb.list('/places');
   }
 
-  public add(newPlaceObject: Place): void {
-
+  public add(newPlace: any): any {
+    return this.placesList.push(newPlace);
   }
 
   public remove(key): void {

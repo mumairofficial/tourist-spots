@@ -24,7 +24,7 @@ export class MyApp {
     }
 
     swithToTabsIfLoggedIn() {
-        if (this._auth.isLoggedIn) {
+        if (this._auth.isLoggedIn()) {
             this.rootPage = TabsPage;
         } else {
             this.rootPage = LoginPage;

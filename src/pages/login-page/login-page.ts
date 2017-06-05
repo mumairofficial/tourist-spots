@@ -44,6 +44,12 @@ export class LoginPage {
         this.navCtrl.setRoot(RegisterPage);
     }
 
+    quickLogin() {
+        this.loginForm = new LoginForm("mumairofficial@gmail.com", "Umair1");
+        // this.loginForm = new LoginForm("umairmughalz@gmail.com", "Umair1");
+        this.login();
+    }
+
     private showLoader() {
         this.loader = this.loadingCtrl.create({
             content: 'Processing'
