@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ModalController, Events, NavController } from 'ionic-angular';
+import { ModalController, Events, NavController, App } from 'ionic-angular';
 import { PlacesProvider } from '../../providers/places/places';
 import { AfoListObservable, AngularFireOfflineDatabase } from 'angularfire2-offline/database';
 import { Place } from '../../model/place';
@@ -18,7 +18,7 @@ export class PlacesPage {
     public isAdmin: boolean;
     public places: AfoListObservable<Place[]>;
 
-    constructor(private modalCtrl: ModalController, private _placeProvider: PlacesProvider, private _auth: AuthProvider,
+    constructor(private app: App, private modalCtrl: ModalController, private _placeProvider: PlacesProvider, private _auth: AuthProvider,
         private events: Events, private navCtrl: NavController, private afoDb: AngularFireOfflineDatabase) {
 
         _auth.isAdmin().subscribe(isAdmin => {
@@ -36,7 +36,8 @@ export class PlacesPage {
     }
 
     switchToPlaceDetailPage(place) {
-        this.navCtrl.push(PlaceDetail, { "selected_place": place });
+        // this.navCtrl.push(PlaceDetail, { "selected_place": place });
+        this.app.getRootNav().push(PlaceDetail, { "selected_place": place });
     }
 
     openModalToCreateNewPlace() {

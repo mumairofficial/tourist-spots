@@ -25,6 +25,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { PlacesProvider } from '../providers/places/places';
 import { AuthProvider } from '../providers/auth/auth';
+import { FlickrService } from '../providers/places/flickr-service';
 import { TextAvatarDirective } from '../components/text-avatar/text-avatar';
 import { LoginPage } from "../pages/login-page/login-page";
 import { RegisterPage } from "../pages/register/register";
@@ -71,7 +72,8 @@ import { AgmCoreModule } from 'angular2-google-maps/core';
     SplashScreen,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     PlacesProvider,
-    AuthProvider
+    AuthProvider,
+    FlickrService
   ]
 })
 export class AppModule { }

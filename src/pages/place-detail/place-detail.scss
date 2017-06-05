@@ -1,6 +1,57 @@
 page-place-detail {
-    .sebm-google-map-container {
-      height: 300px;
+  ion-content {
+    background: #FAFAFA !important;
+  }
+  .sebm-google-map-container {
+    height: 150px;
+  }
+  ion-card {
+    margin: 0px !important;
+    width: 100% !important;
+  }
+
+  .padding-top-8 {
+    padding-top: 8px !important;
+  }
+
+
+  .grid {
+    padding: 0 !important;
+  }
+
+  .col {
+    padding: 0 !important;
+  }
+
+  .card {
+    box-shadow: none;
+  }
+
+  .card-background-page {
+    ion-card {
+      position: relative;
+      text-align: center;
+      margin: 0px;
+      width: 100%;
     }
+    .card-title {
+      position: absolute;
+      top: 36%;
+      font-size: 2.0em;
+      width: 100%;
+      font-weight: bold;
+      color: #fff;
+    }
+    .card-subtitle {
+      font-size: 1.0em;
+      position: absolute;
+      top: 52%;
+      width: 100%;
+      color: #fff;
+    }
+  }
+  .card-image {
+    height: 250px;
+  }
 
 }

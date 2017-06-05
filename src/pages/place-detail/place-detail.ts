@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { AngularFireOfflineDatabase } from 'angularfire2-offline/database';
-import firebase from "firebase";
-import { Place } from '../../model/place';
+import { FlickrService } from "../../providers/places/flickr-service";
+import { DomSanitizer } from "@angular/platform-browser";
 
 @Component({
   selector: 'page-place-detail',
@@ -10,19 +10,28 @@ import { Place } from '../../model/place';
 })
 export class PlaceDetail {
 
-  public place: Place;
-  public usersList: any;
+  public place: any;
+  public imageUrls: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private afoDb: AngularFireOfflineDatabase) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private afoDb: AngularFireOfflineDatabase,
+    private flickrService: FlickrService, private _sanitizer: DomSanitizer) {
     this.place = this.navParams.data.selected_place;
     console.log(this.place);
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad PlaceDetail');
+    this.flickrService.getResult(this.place.district).subscribe(
+      imageUrls => {
+        this.imageUrls = imageUrls;
+      }
+    )
+  }
+
+  getBackground(imageUrl) {
+    return this._sanitizer.bypassSecurityTrustStyle(`url(${imageUrl})`);
   }
 
   toNumber(val: string): number {
     return Number(val);
-  }  
+  }
 }

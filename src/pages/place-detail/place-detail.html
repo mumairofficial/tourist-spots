@@ -1,17 +1,73 @@
-<ion-header>
+<ion-header no-border>
 
   <ion-navbar>
-    <ion-title>{{place.name}} Details</ion-title>
+    <ion-title>{{place.placeName}}</ion-title>
   </ion-navbar>
 
 </ion-header>
 
+<ion-content>
 
-<ion-content padding>
-  <sebm-google-map [latitude]="toNumber(place?.latitude)" [longitude]="toNumber(place?.longitude)" [zoom]="16">
-    <sebm-google-map-marker [latitude]="toNumber(place?.latitude)" [longitude]="toNumber(place?.longitude)" [label]="place.placeName">
-    </sebm-google-map-marker>
-  </sebm-google-map>
+  <ion-grid>
 
-  <img src="{{place.photoUrl}}" />
+    <ion-row margin-bottom>
+      <ion-col class="card-background-page">
+        <ion-card class="card-image">
+          <img src="{{place.photoUrl}}" />
+          <div class="card-title">{{place.placeName}}</div>
+          <div class="card-subtitle">{{place.district}} - {{place.country}}</div>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+
+    <ion-row margin-top>
+      <ion-col>
+        <ion-card>
+          <sebm-google-map [latitude]="toNumber(place.latitude)" [longitude]="toNumber(place.longitude)" [zoom]="15">
+            <sebm-google-map-marker [latitude]="toNumber(place.latitude)" [longitude]="toNumber(place.longitude)"></sebm-google-map-marker>
+          </sebm-google-map>
+          <ion-card-content>
+            <h2>
+              {{place.placeName}}
+            </h2>
+            <small>
+              {{place.district}} - {{place.country}}
+            </small>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <h6 padding-left ion-text color="dark" class="padding-top-8">Description</h6>
+      <ion-card padding>
+        <p>
+          {{place.description}}
+        </p>
+      </ion-card>
+    </ion-row>
+
+    <ion-row margin-bottom>
+      <h6 padding-left ion-text color="dark" class="padding-top-8">Photos <small>(Flickr)</small></h6>
+      <ion-card margin-bottom>
+        <ion-scroll scrollX="true" style="height: 160px; width: 100%">
+          <ion-row nowrap class="card-background-page">
+            <!--<ion-thumbnail *ngFor="let elem of imageUrls">
+              <img src="{{elem.url}}">
+            </ion-thumbnail>-->
+            <div *ngFor="let image of imageUrls" style="padding:0px;">
+              <div [style.background-image]="getBackground(image.url)" style="background-repeat:no-repeat;
+                        background-size:contain; 
+                        width:180px;
+                        height:200px;
+                        margin: 5px;">
+              </div>
+            </div>
+          </ion-row>
+        </ion-scroll>
+      </ion-card>
+    </ion-row>
+
+  </ion-grid>
+
 </ion-content>
