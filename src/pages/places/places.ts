@@ -1,39 +1,48 @@
 import { Component } from '@angular/core';
-import { ModalController } from 'ionic-angular';
+import { ModalController, Events, NavController, App } from 'ionic-angular';
 import { PlacesProvider } from '../../providers/places/places';
-import { AfoListObservable } from 'angularfire2-offline/database';
+import { AfoListObservable, AngularFireOfflineDatabase } from 'angularfire2-offline/database';
 import { Place } from '../../model/place';
 
 import { PlaceFormModalPage } from '../place-form-modal/place-form-modal';
+import { AuthProvider } from "../../providers/auth/auth";
+
+import { PlaceDetail } from "../place-detail/place-detail";
 
 @Component({
-  selector: 'page-places',
-  templateUrl: 'places.html',
+    selector: 'page-places',
+    templateUrl: 'places.html',
 })
 export class PlacesPage {
 
-  public places: AfoListObservable<Place[]>;
+    public isAdmin: boolean;
+    public places: AfoListObservable<Place[]>;
 
-  constructor(private modalCtrl: ModalController, private _placeProvider: PlacesProvider) {
-  }
+    constructor(private app: App, private modalCtrl: ModalController, private _placeProvider: PlacesProvider, private _auth: AuthProvider,
+        private events: Events, private navCtrl: NavController, private afoDb: AngularFireOfflineDatabase) {
 
-  ionViewDidLoad() {
-    this.fetchPlaces();
-  }
+        _auth.isAdmin().subscribe(isAdmin => {
+            this.isAdmin = isAdmin;
+        });
 
-  private fetchPlaces(): void {
-    this.places = this._placeProvider.places();
-  }
+    }
 
-  openModalToCreateNewPlace() {
-    let newPlaceFormModal = this.modalCtrl.create(PlaceFormModalPage);
-    newPlaceFormModal.present();
-  }
+    ionViewDidLoad() {
+        this.fetchPlaces();
+    }
 
-  doRefresh(refresher) {
-    this._placeProvider.places().subscribe(data => {
-      refresher.complete();
-    });
-  }
+    private fetchPlaces(): void {
+        this.places = this._placeProvider.places();
+    }
+
+    switchToPlaceDetailPage(place) {
+        // this.navCtrl.push(PlaceDetail, { "selected_place": place });
+        this.app.getRootNav().push(PlaceDetail, { "selected_place": place });
+    }
+
+    openModalToCreateNewPlace() {
+        let newPlaceFormModal = this.modalCtrl.create(PlaceFormModalPage);
+        newPlaceFormModal.present();
+    }
 
 }

@@ -20,48 +20,70 @@
 
 <ion-content padding>
 
-  <form #form="ngForm" (ngSubmit)="login(form.value)">
+  <form [formGroup]="placeInputForm" (ngSubmit)="saveNewPlace(placeInputForm.value)">
 
     <!--<ion-list>-->
 
-      <ion-title>
-          <ion-note>Location Coordinates</ion-note>
-        </ion-title>
+    <ion-grid>
+      <ion-row>
+        <ion-item>
+          <ion-label floating>Name</ion-label>
+          <ion-input type="text" formControlName="placeName" [(ngModel)]="place.name" autocomplete="true" spellcheck="true" required></ion-input>
+        </ion-item>
+      </ion-row>
 
-      <ion-grid>
-        <ion-row>
+      <ion-row>
+        <ion-col width-66>
           <ion-item>
-            <ion-label floating>Name</ion-label>
-            <ion-input type="text" name="placeName" required></ion-input>
+            <ion-label floating>District</ion-label>
+            <ion-input type="text" formControlName="district" [(ngModel)]="place.district" required></ion-input>
           </ion-item>
-        </ion-row>
+        </ion-col>
 
-        <ion-row>
-          <ion-col width-66>
-            <ion-item>
-              <ion-label floating>District</ion-label>
-              <ion-input type="text" name="district" required></ion-input>
-            </ion-item>
-          </ion-col>
+        <ion-col>
+          <ion-item>
+            <ion-label floating>Country</ion-label>
+            <ion-input type="text" formControlName="country" [(ngModel)]="place.country" value="Pakistan" required></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
 
-          <ion-col>
-            <ion-item>
-              <ion-label floating>Country</ion-label>
-              <ion-input type="text" name="country" value="Pakistan" required></ion-input>
-            </ion-item>
-          </ion-col>
-        </ion-row>
+      <ion-row>
+        <ion-col width-66>
+          <ion-item>
+            <ion-label floating>Latitude</ion-label>
+            <ion-input type="number" formControlName="latitude" [(ngModel)]="place.latitude" required></ion-input>
+          </ion-item>
+        </ion-col>
 
-        <ion-title>
-          <ion-note>Location Coordinates</ion-note>
-        </ion-title>
+        <ion-col>
+          <ion-item>
+            <ion-label floating>Longitude</ion-label>
+            <ion-input type="number" formControlName="longitude" [(ngModel)]="place.longitude" required></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
 
-      </ion-grid>
+      <ion-row>
+        <ion-item>
+          <ion-label floating>Description</ion-label>
+          <ion-textarea autocomplete="true" spellcheck="true" type="text" [(ngModel)]="place.description" formControlName="description" required></ion-textarea>
+        </ion-item>
+      </ion-row>
+
+      <ion-row>
+        <ion-item>
+          <ion-label floating>Photo URL</ion-label>
+          <ion-input type="text" formControlName="photoUrl" [(ngModel)]="place.photoUrl" required></ion-input>
+        </ion-item>
+      </ion-row>
+
+    </ion-grid>
 
     <!--</ion-list>-->
 
     <div padding>
-      <button ion-button color="primary" type="submit" block [disabled]="!form.form.valid">Sign In</button>
+      <button ion-button color="primary" type="submit" block [disabled]="!placeInputForm.valid">Save Place</button>
     </div>
 
   </form>
