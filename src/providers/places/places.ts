@@ -1,18 +1,19 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 
-import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
-import { AngularFireOfflineDatabase, AfoListObservable, AfoObjectObservable } from 'angularfire2-offline/database';
+import { AngularFireOfflineDatabase, AfoListObservable } from 'angularfire2-offline/database';
 
 import 'rxjs/add/operator/map';
 import { Place } from '../../model/place';
+import { GoogleMapService } from "./google-map.service";
+import { Point } from "../../model/point";
 
 @Injectable()
 export class PlacesProvider {
 
   private placesList: AfoListObservable<Place[]>;
 
-  constructor(public http: Http, private afoDb: AngularFireOfflineDatabase) {
+  constructor(public http: Http, private afoDb: AngularFireOfflineDatabase, private gMap: GoogleMapService) {
     this.placesList = this.places();
   }
 
@@ -29,7 +30,7 @@ export class PlacesProvider {
   }
 
   public update(key, updatedObject: Place): void {
-
+    this.placesList.update(key, updatedObject);
   }
 
 }

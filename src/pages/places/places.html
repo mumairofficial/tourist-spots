@@ -13,9 +13,9 @@
 <ion-content>
 
   <ion-list-header *ngIf="!isAdmin" class="filter-header">
-    <ion-select item-left>
+    <ion-select item-left (ionChange)="onSelectSort($event)">
       <ion-option value="near" selected="true">Near to me</ion-option>
-      <ion-option value="less_price">Low Price</ion-option>
+      <ion-option value="away">Away from me</ion-option>
       <ion-option value="less_time">Short time</ion-option>
     </ion-select>
 
@@ -26,13 +26,13 @@
 
   <ion-list no-lines>
     <pre *ngIf="!(places | async)">loading objectives...</pre>
-    <ion-item-sliding *ngFor="let place of places | async" (click)="switchToPlaceDetailPage(place)">
+      <ion-item-sliding *ngFor="let place of modifiedPlacesArray" (click)="switchToPlaceDetailPage(place)">
       <button ion-item class="item item-icon-left item-icon-right">
         <text-avatar text="{{place.placeName}}" item-left>
         </text-avatar>
         <h2>{{place.placeName}}</h2>
         <p>
-          <small>{{place.latitude}} {{place.longitude}}</small>
+          {{place.durationText}} - {{place.distanceText}}
         </p>
       </button>
 
