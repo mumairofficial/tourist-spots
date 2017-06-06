@@ -1,40 +1,52 @@
-<ion-header>
+<ion-content padding class="vertical-align-content">
+  <ion-grid>
+    <form #form="ngForm" (ngSubmit)="login(form.value)">
 
-  <ion-navbar>
-    <ion-title>login-page</ion-title>
-  </ion-navbar>
+      <ion-row margin-bottom class="text-align-center">
+        <ion-col>
+          <img src="assets/images/place.svg" width="52px" />
+          <h3 ion-text color="light" class="margin-top">Tourist Spots</h3>
+          <strong ion-text color="light">User Login</strong>
+        </ion-col>
+      </ion-row>
 
-</ion-header>
+      <ion-row>
+        <ion-col>
+          <ion-list class="custom-form-item">
+            <ion-item class="item-transparent">
+              <ion-label stacked>EMAIL</ion-label>
+              <ion-input type="email" name="email" [(ngModel)]="loginForm.email" required></ion-input>
+            </ion-item>
+
+            <ion-item class="margin-top-8 item-transparent">
+              <ion-label stacked>PASSWORD</ion-label>
+              <ion-input type="password" name="password" [(ngModel)]="loginForm.password" autocomplete="off" required></ion-input>
+            </ion-item>
+          </ion-list>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col class="custom-btn text-align-center">
+          <button ion-item detail-none type="submit" class="text-align-center" [disabled]="!form.valid" style="color:black;">Login</button>
+        </ion-col>
+      </ion-row>
+
+    </form>
+
+    <ion-row margin-top>
+      <ion-col class="custom-btn text-align-center">
+        <button ion-item detail-none type="submit" color="primary" class="text-align-center" (click)="switchToRegisterPage()">Register</button>
+      </ion-col>
+    </ion-row>
+
+    <ion-row margin-top>
+      <ion-col class="custom-btn text-align-center">
+        <button ion-item detail-none type="submit" color="secondary" class="text-align-center" (click)="quickLogin()">Quick Login</button>
+
+      </ion-col>
+    </ion-row>
 
 
-<ion-content>
-
-  <form #form="ngForm" (ngSubmit)="login(form.value)">
-
-    <ion-list>
-
-      <ion-item>
-        <ion-label floating>Email</ion-label>
-        <ion-input type="email" name="email" [(ngModel)]="loginForm.email" required></ion-input>
-      </ion-item>
-
-      <ion-item>
-        <ion-label floating>Password</ion-label>
-        <ion-input type="password" name="password" [(ngModel)]="loginForm.password" autocomplete="off" required></ion-input>
-      </ion-item>
-
-    </ion-list>
-
-    <div padding>
-      <button ion-button color="primary" type="submit" block [disabled]="!form.form.valid">Sign In</button>
-    </div>
-
-  </form>
-
-  <div padding>
-    <button ion-button color="primary" block (click)="switchToRegisterPage()">Register</button>
-  </div>
-
-  <button ion-button color="primary" block (click)="quickLogin()">quiuck-login</button>
-
+  </ion-grid>
 </ion-content>
