@@ -1,47 +1,44 @@
-<ion-header>
+<ion-content padding class="vertical-align-content">
+  <ion-grid>
+    <form #form="ngForm" (ngSubmit)="register(form.value)">
 
-  <ion-navbar>
-    <ion-title>Register</ion-title>
-  </ion-navbar>
+      <ion-row margin-bottom class="text-align-center">
+        <ion-col>
+          <img src="assets/images/place.svg" width="52px" />
+          <h3 ion-text color="light" class="margin-top">Tourist Spots</h3>
+          <strong ion-text color="light">Welcome</strong>
+        </ion-col>
+      </ion-row>
 
-</ion-header>
+      <ion-row>
+        <ion-col>
+          <ion-list class="custom-form-item">
+            <ion-item class="item-transparent">
+              <ion-label stacked>EMAIL</ion-label>
+              <ion-input type="email" name="email" [(ngModel)]="registerForm.email" required></ion-input>
+            </ion-item>
 
+            <ion-item class="margin-top-8 item-transparent">
+              <ion-label stacked>PASSWORD</ion-label>
+              <ion-input type="password" name="password" [(ngModel)]="registerForm.password" autocomplete="off" required></ion-input>
+            </ion-item>
+          </ion-list>
+        </ion-col>
+      </ion-row>
 
-<ion-content>
-  <form #form="ngForm" (ngSubmit)="register(form.value)">
+      <ion-row>
+        <ion-col class="custom-btn text-align-center">
+          <button ion-item detail-none type="submit" class="text-align-center" [disabled]="!form.valid" style="color:black;">Register</button>
+        </ion-col>
+      </ion-row>
 
-    <ion-list>
+    </form>
 
-      <!--<ion-item>
-        <ion-label floating>First Name</ion-label>
-        <ion-input type="text" name="firstName" [(ngModel)]="registerForm.firstName" required></ion-input>
-      </ion-item>
+    <ion-row margin-top>
+      <ion-col class="custom-btn text-align-center">
+        <button ion-item detail-none type="submit" color="primary" class="text-align-center" (click)="switchToLoginPage()">Login</button>
+      </ion-col>
+    </ion-row>
 
-      <ion-item>
-        <ion-label floating>Last Name</ion-label>
-        <ion-input type="text" name="lastName" [(ngModel)]="registerForm.lastName" autocomplete="on" required></ion-input>
-      </ion-item>-->
-
-      <ion-item>
-        <ion-label floating>Email</ion-label>
-        <ion-input type="email" name="email" [(ngModel)]="registerForm.email" required></ion-input>
-      </ion-item>
-
-      <ion-item>
-        <ion-label floating>Password</ion-label>
-        <ion-input type="password" name="password" [(ngModel)]="registerForm.password" autocomplete="off" required></ion-input>
-      </ion-item>
-
-    </ion-list>
-
-    <div padding>
-      <button ion-button color="primary" type="submit" block [disabled]="!form.form.valid">Register</button>
-    </div>
-
-  </form>
-
-  <div padding>
-    <button ion-button color="primary" block (click)="switchToLoginPage()">Login</button>
-  </div>
-
+  </ion-grid>
 </ion-content>
