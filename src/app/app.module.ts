@@ -2,6 +2,7 @@ import { NgModule, ErrorHandler } from '@angular/core';
 import { HttpModule } from '@angular/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
+import { Geolocation } from '@ionic-native/geolocation';
 
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
@@ -31,6 +32,7 @@ import { LoginPage } from "../pages/login-page/login-page";
 import { RegisterPage } from "../pages/register/register";
 
 import { AgmCoreModule } from 'angular2-google-maps/core';
+import { GoogleMapService } from "../providers/places/google-map.service";
 
 @NgModule({
   declarations: [
@@ -71,6 +73,8 @@ import { AgmCoreModule } from 'angular2-google-maps/core';
     StatusBar,
     SplashScreen,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
+    Geolocation,
+    GoogleMapService,
     PlacesProvider,
     AuthProvider,
     FlickrService

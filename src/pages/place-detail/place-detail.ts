@@ -16,7 +16,6 @@ export class PlaceDetail {
   constructor(public navCtrl: NavController, public navParams: NavParams, private afoDb: AngularFireOfflineDatabase,
     private flickrService: FlickrService, private _sanitizer: DomSanitizer) {
     this.place = this.navParams.data.selected_place;
-    console.log(this.place);
   }
 
   ionViewDidLoad() {
@@ -24,7 +23,7 @@ export class PlaceDetail {
       imageUrls => {
         this.imageUrls = imageUrls;
       }
-    )
+    );
   }
 
   getBackground(imageUrl) {
@@ -34,4 +33,5 @@ export class PlaceDetail {
   toNumber(val: string): number {
     return Number(val);
   }
+  
 }

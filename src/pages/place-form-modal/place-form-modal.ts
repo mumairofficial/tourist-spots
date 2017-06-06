@@ -24,9 +24,9 @@ export class PlaceFormModalPage {
 
     private initiateFormBuilder() {
         this.placeInputForm = this.formBuilder.group({
-            placeName: ['', Validators.compose([Validators.maxLength(30), Validators.required])],
-            district: ['', Validators.compose([Validators.maxLength(30), Validators.required])],
-            country: ['', Validators.compose([Validators.maxLength(30), Validators.required])],
+            placeName: ['', Validators.compose([Validators.maxLength(80), Validators.required])],
+            district: ['', Validators.compose([Validators.maxLength(80), Validators.required])],
+            country: ['Pakistan', Validators.compose([Validators.maxLength(80), Validators.required])],
             latitude: ['', Validators.compose([Validators.maxLength(30), Validators.required])],
             longitude: ['', Validators.compose([Validators.maxLength(30), Validators.required])],
             description: ['', Validators.compose([Validators.maxLength(30), Validators.required])],
@@ -43,6 +43,8 @@ export class PlaceFormModalPage {
     }
 
     saveNewPlace(values) {
+        values.distance = 0;
+        values.duration = 0;
         this._placeProvider.add(values);
         this.presentToast("Place was saved successfully");
         this.placeInputForm.reset();
