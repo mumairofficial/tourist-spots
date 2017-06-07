@@ -1,3 +1,35 @@
 page-register {
-
+  ion-content {
+    background-image: url('../assets/images/login_background.png');
+  }
+  .item-transparent {
+    background-color: transparent !important;
+    color: white;
+  } //////
+  .custom-btn>.item>.item-inner {
+    border-bottom: 0 !important;
+  }
+  .custom-btn>.item {
+    border-radius: 4px !important;
+  }
+  .custom-form-item>.item {
+    padding-left: 0 !important;
+  }
+  .vertical-align-content>* {
+    display: flex !important;
+    align-content: center !important;
+    align-items: center !important;
+  }
+  .text-align-center {
+    text-align: center !important;
+  }
+  .logo-cloud-icon {
+    font-size: 6em;
+  }
+  .margin-top-0 {
+    margin-top: 0 !important;
+  }
+  .margin-top-8 {
+    margin-top: 8px !important;
+  }
 }
