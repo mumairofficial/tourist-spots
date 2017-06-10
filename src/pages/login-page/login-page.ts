@@ -45,8 +45,8 @@ export class LoginPage {
     }
 
     quickLogin() {
-        this.loginForm = new LoginForm("mumairofficial@gmail.com", "Umair1");
-        // this.loginForm = new LoginForm("umairmughalz@gmail.com", "Umair1");
+        // this.loginForm = new LoginForm("mumairofficial@gmail.com", "Umair1");
+        this.loginForm = new LoginForm("umairmughalz@gmail.com", "Umair1");
         this.login();
     }
 
