@@ -1,15 +1,15 @@
-import { Component } from '@angular/core';
-import { ModalController, Events, NavController, App } from 'ionic-angular';
-import { PlacesProvider } from '../../providers/places/places';
-import { GoogleMapService } from '../../providers/places/google-map.service';
-import { AfoListObservable, AngularFireOfflineDatabase } from 'angularfire2-offline/database';
-import { Place } from '../../model/place';
+import {Component} from "@angular/core";
+import {AlertController, App, ModalController} from "ionic-angular";
+import {PlacesProvider} from "../../providers/places/places";
+import {GoogleMapService} from "../../providers/places/google-map.service";
+import {AfoListObservable} from "angularfire2-offline/database";
+import {Place} from "../../model/place";
 
-import { PlaceFormModalPage } from '../place-form-modal/place-form-modal';
-import { AuthProvider } from "../../providers/auth/auth";
+import {PlaceFormModalPage} from "../place-form-modal/place-form-modal";
+import {AuthProvider} from "../../providers/auth/auth";
 
-import { PlaceDetail } from "../place-detail/place-detail";
-import { Point } from "../../model/point";
+import {PlaceDetail} from "../place-detail/place-detail";
+import {Point} from "../../model/point";
 
 @Component({
     selector: 'page-places',
@@ -24,7 +24,7 @@ export class PlacesPage {
     public myLocation: Point;
 
     constructor(private app: App, private modalCtrl: ModalController, private _placeProvider: PlacesProvider, private _auth: AuthProvider,
-        private events: Events, private navCtrl: NavController, private afoDb: AngularFireOfflineDatabase, private _gMap: GoogleMapService) {
+                private _gMap: GoogleMapService, private alertCtrl: AlertController) {
 
         this.modifiedPlacesArray = [];
         this.myLocation = new Point(0, 0);
@@ -39,13 +39,17 @@ export class PlacesPage {
         this.fetchPlaces();
     }
 
+    onUpdate(place: any): any {
+        let placeFormModal = this.modalCtrl.create(PlaceFormModalPage, {placeToUpdate: place});
+        placeFormModal.present();
+    }
+
+    onDelete(place: any): any {
+        this.showDeleteConfirmAlert(place);
+    }
+
     private fetchPlaces(): void {
         this.places = this._placeProvider.places();
-
-        // this._placeProvider.places()
-        //     .map(place => {
-        //         this._gMap.calculateDistance(new Point(place.latitude, place.longitude))
-        //     })
 
         this._placeProvider.places().subscribe(
             list => {
@@ -70,7 +74,7 @@ export class PlacesPage {
 
     switchToPlaceDetailPage(place) {
         // this.navCtrl.push(PlaceDetail, { "selected_place": place });
-        this.app.getRootNav().push(PlaceDetail, { "selected_place": place });
+        this.app.getRootNav().push(PlaceDetail, {"selected_place": place});
     }
 
     openModalToCreateNewPlace() {
@@ -106,4 +110,24 @@ export class PlacesPage {
         });
     }
 
+    private showDeleteConfirmAlert(place: any): void {
+        this.alertCtrl.create({
+            subTitle: "Are you sure?",
+            message: `${place.placeName} will no longer exist in list.`,
+            buttons: [
+                {
+                    text: 'Cancel',
+                    role: 'cancel'
+                },
+                {
+                    text: 'Delete',
+                    handler: () => this.deletePlace(place)
+                }
+            ]
+        }).present();
+    }
+
+    private deletePlace(place: any) {
+        this._placeProvider.remove(place.$key);
+    }
 }

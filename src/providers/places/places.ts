@@ -1,12 +1,11 @@
-import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
+import {Injectable} from "@angular/core";
+import {Http} from "@angular/http";
 
-import { AngularFireOfflineDatabase, AfoListObservable } from 'angularfire2-offline/database';
+import {AfoListObservable, AngularFireOfflineDatabase} from "angularfire2-offline/database";
 
-import 'rxjs/add/operator/map';
-import { Place } from '../../model/place';
-import { GoogleMapService } from "./google-map.service";
-import { Point } from "../../model/point";
+import "rxjs/add/operator/map";
+import {Place} from "../../model/place";
+import {GoogleMapService} from "./google-map.service";
 
 @Injectable()
 export class PlacesProvider {
@@ -26,7 +25,7 @@ export class PlacesProvider {
   }
 
   public remove(key): void {
-
+    this.placesList.remove(key);
   }
 
   public update(key, updatedObject: Place): void {
