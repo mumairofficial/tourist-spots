@@ -73,7 +73,6 @@ export class PlacesPage {
     }
 
     switchToPlaceDetailPage(place) {
-        // this.navCtrl.push(PlaceDetail, { "selected_place": place });
         this.app.getRootNav().push(PlaceDetail, {"selected_place": place});
     }
 
