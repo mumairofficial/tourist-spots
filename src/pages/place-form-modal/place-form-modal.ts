@@ -1,10 +1,9 @@
-import { Component } from '@angular/core';
-import { ToastController, ViewController } from 'ionic-angular';
+import {Component} from "@angular/core";
+import {NavParams, ToastController, ViewController} from "ionic-angular";
+import {PlacesProvider} from "../../providers/places/places";
+import {FormBuilder, Validators} from "@angular/forms";
 
-import { AngularFireOfflineDatabase } from 'angularfire2-offline/database';
-import { Place } from "../../model/place";
-import { PlacesProvider } from "../../providers/places/places";
-import { FormBuilder, Validators } from "@angular/forms";
+const PLACE_TO_UPDATE_KEY: string = "placeToUpdate";
 
 @Component({
     selector: 'page-place-form-modal',
@@ -12,42 +11,57 @@ import { FormBuilder, Validators } from "@angular/forms";
 })
 export class PlaceFormModalPage {
 
-    public place: Place;
+    public place: any;
     public placeInputForm: any;
+    private placeToUpdate: any;
 
     constructor(private viewCtrl: ViewController, private _placeProvider: PlacesProvider,
-        private afoDb: AngularFireOfflineDatabase, private toastCtrl: ToastController, private formBuilder: FormBuilder) {
-        this.place = new Place("", 0, 0, "", "", "");
+                private navParams: NavParams, private toastCtrl: ToastController, private formBuilder: FormBuilder) {
+
+        this.placeToUpdate = navParams.get(PLACE_TO_UPDATE_KEY);
+        this.place = this.placeToUpdate || {};
 
         this.initiateFormBuilder();
     }
 
     private initiateFormBuilder() {
         this.placeInputForm = this.formBuilder.group({
-            placeName: ['', Validators.compose([Validators.maxLength(80), Validators.required])],
-            district: ['', Validators.compose([Validators.maxLength(80), Validators.required])],
-            country: ['Pakistan', Validators.compose([Validators.maxLength(80), Validators.required])],
-            latitude: ['', Validators.compose([Validators.maxLength(30), Validators.required])],
-            longitude: ['', Validators.compose([Validators.maxLength(30), Validators.required])],
-            description: ['', Validators.compose([Validators.maxLength(30), Validators.required])],
-            photoUrl: ['', Validators.compose([Validators.required])]
+            placeName: [this.place.placeName, Validators.compose([Validators.maxLength(80), Validators.required])],
+            district: [this.place.district, Validators.compose([Validators.maxLength(80), Validators.required])],
+            country: [this.place.country, Validators.compose([Validators.maxLength(80), Validators.required])],
+            latitude: [this.place.latitude, Validators.compose([Validators.maxLength(30), Validators.required])],
+            longitude: [this.place.longitude, Validators.compose([Validators.maxLength(30), Validators.required])],
+            description: [this.place.description, Validators.compose([Validators.maxLength(30), Validators.required])],
+            photoUrl: [this.place.photoUrl, Validators.compose([Validators.required])]
         });
     }
 
-    ionViewDidLoad() {
-        console.log('ionViewDidLoad PlaceFormModalPage');
-    }
 
     dismiss() {
         this.viewCtrl.dismiss();
     }
 
-    saveNewPlace(values) {
+    onSaveOrUpdate(values): void {
+        if (!this.navParams.get(PLACE_TO_UPDATE_KEY)) {
+            this.save(values);
+        } else {
+            this.update(this.placeToUpdate.$key, values)
+        }
+    }
+
+    private save(values: any): void {
         values.distance = 0;
         values.duration = 0;
         this._placeProvider.add(values);
         this.presentToast("Place was saved successfully");
         this.placeInputForm.reset();
+    }
+
+    private update(key: string, updatedValues: any): void {
+        this._placeProvider.update(key, updatedValues);
+        this.presentToast("Place was updated successfully");
+        this.placeInputForm.reset();
+        this.dismiss();
     }
 
     presentToast(message: string) {
