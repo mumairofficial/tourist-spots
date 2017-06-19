@@ -1,7 +1,7 @@
 Ionic App Base
 =====================
 
-This is the base template for Ionic starter apps.
+Hybrid application with suggest adventure places to user on the basis of short time, less distance
 
 ## Using this project
 
